@@ -273,9 +273,46 @@ function downloadImage(url, name) {
     }
   });
 
+  // لعرض صفحة معينة
+function displayPage(page) {
+  const imageGrid = document.getElementById("imageGrid");
+  imageGrid.innerHTML = "";
+
+  const start = (page - 1) * imagesPerPage;
+  const end = start + imagesPerPage;
+  const pageImages = allImages.slice(start, end);
+
+  pageImages.forEach(img => {
+    imageGrid.appendChild(img.element);
+  });
+
+  updatePaginationControls();
+}
+
+// لإنشاء أزرار التحكم في الصفحات
+function updatePaginationControls() {
+  const totalPages = Math.ceil(allImages.length / imagesPerPage);
+  const controls = document.getElementById("paginationControls");
+
+  controls.innerHTML = `
+    <button ${currentPage === 1 ? 'disabled' : ''} onclick="changePage(-1)">⬅ السابق</button>
+    <span>الصفحة ${currentPage} من ${totalPages}</span>
+    <button ${currentPage === totalPages ? 'disabled' : ''} onclick="changePage(1)">التالي ➡</button>
+  `;
+}
+
+// لتغيير الصفحة
+function changePage(direction) {
+  currentPage += direction;
+  displayPage(currentPage);
+}
 
 
-let allImages = [];
+const rowsPerPage = 10; // عدد الصفوف في كل صفحة
+const imagesPerPage =  rowsPerPage;
+
+let currentPage = 1;
+let allImages = []; // سيتم ملؤها بعناصر الصور
 
 async function loadImages(filter = '') {
   const grid = document.getElementById('imageGrid');

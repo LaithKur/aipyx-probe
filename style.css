@@ -354,3 +354,7 @@ button {
 .image-modal.hidden {
   display: none;
 }
+ .paginationControls{
+  text-align:center; 
+  margin: 20px;
+ }
