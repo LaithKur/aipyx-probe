@@ -355,18 +355,4 @@ button {
   display: none;
 }
 
-#pagination {
-  text-align: center;
-  margin-top: 20px;
-}
-#pagination button {
-  margin: 0 5px;
-  padding: 6px 12px;
-  border: none;
-  background-color: #eee;
-  cursor: pointer;
-}
-#pagination button.active-page {
-  background-color: #007bff;
-  color: white;
-}
+
