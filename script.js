@@ -164,6 +164,7 @@ setTimeout(() => {
 
 
 
+let pageNumber = 1; // الصفحة الحالية
 
 
 
@@ -272,44 +273,10 @@ function downloadImage(url, name) {
       modal.classList.add("hidden");
     }
   });
-const rowsPerPage = 10; // عدد الصفوف في كل صفحة
-const columnsPerRow = 4; // عدد الأعمدة في الصف الواحد (يمكنك تغييره حسب التصميم)
-const imagesPerPage = rowsPerPage * columnsPerRow;
 
-let currentPage = 1;
-let allImages = []; // تأكد أن هذه المصفوفة تحتوي كل العناصر من نوع { element }
 
-function displayPage(page) {
-  const imageGrid = document.getElementById("imageGrid");
-  imageGrid.innerHTML = "";
 
-  const start = (page - 1) * imagesPerPage;
-  const end = start + imagesPerPage;
-  const pageImages = allImages.slice(start, end);
-
-  pageImages.forEach(img => {
-    imageGrid.appendChild(img.element);
-  });
-
-  updatePaginationControls();
-}
-
-function updatePaginationControls() {
-  const totalPages = Math.ceil(allImages.length / imagesPerPage);
-  const controls = document.getElementById("paginationControls");
-
-  controls.innerHTML = `
-    <button ${currentPage === 1 ? 'disabled' : ''} onclick="changePage(-1)">⬅ السابق</button>
-    <span>الصفحة ${currentPage} من ${totalPages}</span>
-    <button ${currentPage === totalPages ? 'disabled' : ''} onclick="changePage(1)">التالي ➡</button>
-  `;
-}
-
-function changePage(direction) {
-  currentPage += direction;
-  displayPage(currentPage);
-}
-
+let allImages = [];
 
 async function loadImages(filter = '') {
   const grid = document.getElementById('imageGrid');
@@ -329,10 +296,22 @@ async function loadImages(filter = '') {
     return matchName && matchDevice;
   });
 
-  filteredImages.forEach(data => {
+
+
+const columnsPerRow = 4; // عدد الصور في كل صف
+const rowsPerPage = 12; // عدد الصفوف في كل صفحة
+const imagesPerPage = columnsPerRow * rowsPerPage;
+
+// حساب مدى الصور لصفحة معينة
+const startIndex = (pageNumber - 1) * imagesPerPage;
+const endIndex = startIndex + imagesPerPage;
+
+  
+
+  filteredImages.slice(startIndex, endIndex).forEach(data => {
   const card = document.createElement('div');
   card.className = 'image-card';
-
+  
   // حساب متوسط التقييم
   const ratings = data.ratings || {};
   const ratingValues = Object.values(ratings);
@@ -378,7 +357,6 @@ async function loadImages(filter = '') {
       ` : ''}
     </div>
   `;
-
 
   // تحديث النجوم ومتوسط التقييم في الواجهة بعد التقييم
   function updateStars(newRating) {
