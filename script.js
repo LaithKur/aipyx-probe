@@ -272,8 +272,13 @@ function downloadImage(url, name) {
       modal.classList.add("hidden");
     }
   });
+const rowsPerPage = 10; // عدد الصفوف في كل صفحة
+const columnsPerRow = 4; // عدد الأعمدة في الصف الواحد (يمكنك تغييره حسب التصميم)
+const imagesPerPage = rowsPerPage * columnsPerRow;
 
-  // لعرض صفحة معينة
+let currentPage = 1;
+let allImages = []; // تأكد أن هذه المصفوفة تحتوي كل العناصر من نوع { element }
+
 function displayPage(page) {
   const imageGrid = document.getElementById("imageGrid");
   imageGrid.innerHTML = "";
@@ -289,7 +294,6 @@ function displayPage(page) {
   updatePaginationControls();
 }
 
-// لإنشاء أزرار التحكم في الصفحات
 function updatePaginationControls() {
   const totalPages = Math.ceil(allImages.length / imagesPerPage);
   const controls = document.getElementById("paginationControls");
@@ -301,18 +305,11 @@ function updatePaginationControls() {
   `;
 }
 
-// لتغيير الصفحة
 function changePage(direction) {
   currentPage += direction;
   displayPage(currentPage);
 }
 
-
-const rowsPerPage = 10; // عدد الصفوف في كل صفحة
-const imagesPerPage =  rowsPerPage;
-
-let currentPage = 1;
-let allImages = []; // سيتم ملؤها بعناصر الصور
 
 async function loadImages(filter = '') {
   const grid = document.getElementById('imageGrid');
@@ -381,6 +378,7 @@ async function loadImages(filter = '') {
       ` : ''}
     </div>
   `;
+
 
   // تحديث النجوم ومتوسط التقييم في الواجهة بعد التقييم
   function updateStars(newRating) {
