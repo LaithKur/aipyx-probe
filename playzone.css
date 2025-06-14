@@ -1,0 +1,39 @@
+body{
+    background:linear-gradient( to right, rgb(255, 255, 255), rgb(144, 144, 144));
+}
+.header {
+  background-color: #4da6ff;
+  padding: 1rem;
+  align-items: center;
+}
+h1{
+    text-align:center;
+}
+.games{
+    display: flex;
+  overflow-x: auto; /* التمرير الأفقي */
+  white-space: nowrap;
+  gap: 1em;
+  padding: 1em;
+  border: 1px solid #402c2c;
+  border:0.3rem solid black;
+}
+.game{
+    height:10em;
+    width:auto;
+    border:0.2em solid black;
+    height:16em;
+    width:22em;
+    align-items:center;
+    text-align:center;
+}
+.button{
+    border:0.1em solid black;
+    border-radius:0.8rem;
+    background-color:blue;
+    color:white;
+    font-size:1.5rem;
+}
+a{
+    color:white;
+}
